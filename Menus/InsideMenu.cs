@@ -7,15 +7,14 @@ using WeatherAnalysis.Interfaces;
 
 namespace WeatherAnalysis.Menus
 {
-    public class OutsideMenu : IMenu
+    public class InsideMenu : IMenu
     {
-        public Enum MenuEnum { get;}
+        public Enum MenuEnum { get; }
 
-        public OutsideMenu()
+        public InsideMenu()
         {
-            MenuEnum = new Enums.Enum.OutsideMenu();
+            MenuEnum = new Enums.Enum.InsdieMenu();
         }
-
 
         public void DrawMenu()
         {

@@ -12,12 +12,15 @@ namespace WeatherAnalysis.Graphics
         {
             //Get what type of enum was inserted
             Type myEnum = menuEnum.GetType();
+            
+            Console.WriteLine(myEnum.Name);
             //Print all menu rows
             foreach (int i in Enum.GetValues(myEnum))
             {
                 //Print row value
                 Console.WriteLine("[" + i + "] " + Enum.GetName(myEnum, i).Replace('_', ' '));
             }
+            Console.WriteLine();
         }
     }
 }

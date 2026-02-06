@@ -14,12 +14,15 @@ namespace WeatherAnalysis
 
             Console.WriteLine();
 
-            Menus.OutSideMenu outSideMenu = new Menus.OutSideMenu();
+            Menus.OutsideMenu outSideMenu = new Menus.OutsideMenu();
             //outSideMenu.DrawMenu();
+
+            Menus.InsideMenu insideMenu = new Menus.InsideMenu();
 
             List<IMenu> menus = new List<IMenu>();
             menus.Add(mainMenu);
             menus.Add(outSideMenu);
+            menus.Add(insideMenu);
 
             foreach (var menu in menus) 
             {
