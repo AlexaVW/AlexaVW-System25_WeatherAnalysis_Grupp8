@@ -25,6 +25,37 @@ namespace WeatherAnalysis.Menus
 
         public void HandleInput()
         {
+            if (int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out int num))
+            {
+                Console.Clear();
+                switch ((Enums.Enum.MainMenu)num)
+                {
+                    case Enums.Enum.MainMenu.Outside:
+
+                        break;
+                    case Enums.Enum.MainMenu.Inside:
+                        Menus.InsideMenu insideMenu = new Menus.InsideMenu();
+                        insideMenu.Run();
+                        break;
+                    
+                    case Enums.Enum.MainMenu.Write_Report_To_File:
+
+                        break;
+                    case Enums.Enum.MainMenu.Exit:
+
+                        break;
+                }
+            }
+            Console.Clear();
+        }
+        public void Run()
+        {
+            bool isRunning = true;
+            while (isRunning)
+            {
+                DrawMenu();
+                HandleInput();
+            }
             
         }
     }

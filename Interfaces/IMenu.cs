@@ -9,11 +9,10 @@ namespace WeatherAnalysis.Interfaces
 {
     public interface IMenu
     {
-
-
         Enum MenuEnum { get;}
 
         void HandleInput();
         void DrawMenu();
+        void Run();
     }
 }

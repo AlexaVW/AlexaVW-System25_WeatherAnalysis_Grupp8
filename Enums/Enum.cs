@@ -12,7 +12,8 @@ namespace WeatherAnalysis.Enums
         {
             Outside = 1,
             Inside,
-            Write_Report_To_File
+            Write_Report_To_File,
+            Exit = 9
         }
 
         public enum OutsideMenu
@@ -22,7 +23,8 @@ namespace WeatherAnalysis.Enums
             Humidity_Dry_To_Wet,
             Moldrisk_Low_To_High,
             Meteorological_Autumn,
-            Meteorological_Winter
+            Meteorological_Winter,
+            Go_Back = 9
 
         }
 
@@ -31,7 +33,8 @@ namespace WeatherAnalysis.Enums
             Avereges = 1,
             Warm_To_Cold,
             Humidity_Dry_To_Wet,
-            Moldrisk_Low_To_High
+            Moldrisk_Low_To_High,
+            Go_Back = 9
         }
     }
 }

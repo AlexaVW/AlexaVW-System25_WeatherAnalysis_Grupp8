@@ -26,5 +26,11 @@ namespace WeatherAnalysis.Menus
         {
             
         }
+
+        public void Run()
+        {
+            DrawMenu();
+            HandleInput();
+        }
     }
 }
