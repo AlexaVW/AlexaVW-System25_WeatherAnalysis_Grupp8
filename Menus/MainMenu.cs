@@ -42,6 +42,8 @@ namespace WeatherAnalysis.Menus
                 switch ((Enums.Enum.MainMenu)num)
                 {
                     case Enums.Enum.MainMenu.Outside:
+                        Menus.OutsideMenu outsideMenu = new Menus.OutsideMenu();
+                        outsideMenu.Run();
                         break;
 
                     case Enums.Enum.MainMenu.Inside:
@@ -50,8 +52,9 @@ namespace WeatherAnalysis.Menus
                         break;
                     
                     case Enums.Enum.MainMenu.Write_Report_To_File:
+                        Console.WriteLine("No method added");
+                        Console.ReadKey(true);
                         break;
-
 
                     case Enums.Enum.MainMenu.Exit:
                         isActive = false;

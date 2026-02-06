@@ -7,6 +7,8 @@ namespace WeatherAnalysis
     {
         static void Main(string[] args)
         {
+
+            //Console.WriteLine(Helpers.GetFileText("WeatherData.txt")[0]);
             Menus.MainMenu mainMenu = new Menus.MainMenu();
 
             mainMenu.Run();
