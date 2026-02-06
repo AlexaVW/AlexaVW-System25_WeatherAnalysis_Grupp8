@@ -8,5 +8,9 @@ namespace WeatherAnalysis.UI
 {
     internal class UI_Menu
     {
+        public static void PrintMenuInsideOutside()
+        {
+            
+        }
     }
 }
