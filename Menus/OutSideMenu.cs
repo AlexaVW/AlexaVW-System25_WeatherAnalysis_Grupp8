@@ -30,6 +30,7 @@ namespace WeatherAnalysis.Menus
         public void DrawMenu()
         {
             Graphics.UI.PrintMenu(MenuEnum);
+
         }
 
         public bool HandleInput()
