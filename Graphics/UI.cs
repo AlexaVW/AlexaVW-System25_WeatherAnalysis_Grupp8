@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeatherAnalysis.UI
+namespace WeatherAnalysis.Graphics
 {
-    public class UI_Menu
+    public class UI
     {
         public static void PrintMenu(Enum menuEnum)
         {

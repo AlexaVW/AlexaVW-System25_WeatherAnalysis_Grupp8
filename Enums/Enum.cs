@@ -8,10 +8,11 @@ namespace WeatherAnalysis.Enums
 {
     internal class Enum
     {
-        public enum InsideOutsideMenu
+        public enum MainMenu
         {
             Outside = 1,
-            Inside
+            Inside,
+            Write_Report_To_File
         }
 
         public enum OutsideMenu
