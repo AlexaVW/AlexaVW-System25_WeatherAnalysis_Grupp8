@@ -16,24 +16,6 @@ namespace WeatherAnalysis.Menus
             MenuEnum = new Enums.Enum.InsdieMenu();
         }
 
-        public void DrawMenu()
-        {
-            Graphics.UI.PrintMenu(MenuEnum);
-        }
-
-        public bool HandleInput()
-        {
-            Console.Clear();
-            Console.WriteLine("Leave empty to go back");
-            string input = Console.ReadLine();
-
-            if (input == "")
-                return false;
-            else
-                return true;
-
-        }
-
         public void Run()
         {
             bool isRunning = true;
@@ -43,5 +25,24 @@ namespace WeatherAnalysis.Menus
                 isRunning = HandleInput();
             }
         }
+
+        public void DrawMenu()
+        {
+            Graphics.UI.PrintMenu(MenuEnum);
+        }
+
+        public bool HandleInput()
+        {
+            
+            Console.WriteLine("Leave empty to go back");
+            string input = Console.ReadLine();
+            Console.Clear();
+            if (input == "")
+                return false;
+            else
+                return true;
+
+        }
+
     }
 }

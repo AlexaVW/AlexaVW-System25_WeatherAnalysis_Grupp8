@@ -17,25 +17,6 @@ namespace WeatherAnalysis.Menus
         }
 
 
-        public void DrawMenu()
-        {
-            Graphics.UI.PrintMenu(MenuEnum);
-        }
-
-        public bool HandleInput()
-        {
-            Console.WriteLine("Leave empty to go back");
-            string input = Console.ReadLine();
-
-            Console.Clear();
-            if (input == "")
-                return false;
-            else
-                return true;
-
-            
-        }
-
         public void Run()
         {
             bool isRunning = true;
@@ -45,5 +26,48 @@ namespace WeatherAnalysis.Menus
                 isRunning = HandleInput();
             }
         }
+
+        public void DrawMenu()
+        {
+            Graphics.UI.PrintMenu(MenuEnum);
+        }
+
+        public bool HandleInput()
+        {
+            bool isActive = true;
+            if (int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out int num))
+            {
+                Console.Clear();
+                switch ((Enums.Enum.OutsideMenu)num)
+                {
+                    case Enums.Enum.OutsideMenu.Averages:
+                        break;
+
+                    case Enums.Enum.OutsideMenu.Warm_To_Cold:
+                        break;
+
+                    case Enums.Enum.OutsideMenu.Humidity_Dry_To_Wet:
+                        break;
+
+                    case Enums.Enum.OutsideMenu.Moldrisk_Low_To_High:
+                        break;
+
+                    case Enums.Enum.OutsideMenu.Meteorological_Autumn:
+                        break;
+
+                    case Enums.Enum.OutsideMenu.Meteorological_Winter:
+                        break;
+
+
+                    case Enums.Enum.OutsideMenu.Go_Back:
+                        isActive = false;
+                        break;
+                }
+            }
+
+            Console.Clear();
+            return isActive;
+        }
+
     }
 }

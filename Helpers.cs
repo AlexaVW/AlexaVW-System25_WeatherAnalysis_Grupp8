@@ -8,6 +8,6 @@ namespace WeatherAnalysis
 {
     public class Helpers
     {
-        
+
     }
 }

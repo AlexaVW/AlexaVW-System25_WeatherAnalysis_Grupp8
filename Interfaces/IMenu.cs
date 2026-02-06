@@ -15,7 +15,12 @@ namespace WeatherAnalysis.Interfaces
         void DrawMenu();
         void Run()
         {
-
+            bool isRunning = true;
+            while (isRunning)
+            {
+                DrawMenu();
+                isRunning = HandleInput();
+            }
         }
     }
 }
