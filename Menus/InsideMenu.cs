@@ -21,37 +21,27 @@ namespace WeatherAnalysis.Menus
             Graphics.UI.PrintMenu(MenuEnum);
         }
 
-        public void HandleInput()
+        public bool HandleInput()
         {
-            if (int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out int num))
-            {
-                Console.Clear();
-                switch ((Enums.Enum.InsdieMenu)num)
-                {
-                    case Enums.Enum.InsdieMenu.Avereges:
-                        
-                        break;
-                    case Enums.Enum.InsdieMenu.Warm_To_Cold:
-
-                        break;
-                    case Enums.Enum.InsdieMenu.Humidity_Dry_To_Wet:
-
-                        break;
-                    case Enums.Enum.InsdieMenu.Moldrisk_Low_To_High:
-
-                        break;
-                    case Enums.Enum.InsdieMenu.Go_Back:
-                        
-                        break;
-                }
-            }
             Console.Clear();
+            Console.WriteLine("Leave empty to go back");
+            string input = Console.ReadLine();
+
+            if (input == "")
+                return false;
+            else
+                return true;
+
         }
 
         public void Run()
         {
-            DrawMenu();
-            HandleInput();
+            bool isRunning = true;
+            while (isRunning)
+            {
+                DrawMenu();
+                isRunning = HandleInput();
+            }
         }
     }
 }

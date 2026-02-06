@@ -11,8 +11,11 @@ namespace WeatherAnalysis.Interfaces
     {
         Enum MenuEnum { get;}
 
-        void HandleInput();
+        bool HandleInput();
         void DrawMenu();
-        void Run();
+        void Run()
+        {
+
+        }
     }
 }

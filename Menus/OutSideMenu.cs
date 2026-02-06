@@ -22,15 +22,28 @@ namespace WeatherAnalysis.Menus
             Graphics.UI.PrintMenu(MenuEnum);
         }
 
-        public void HandleInput()
+        public bool HandleInput()
         {
+            Console.WriteLine("Leave empty to go back");
+            string input = Console.ReadLine();
+
+            Console.Clear();
+            if (input == "")
+                return false;
+            else
+                return true;
+
             
         }
 
         public void Run()
         {
-            DrawMenu();
-            HandleInput();
+            bool isRunning = true;
+            while (isRunning)
+            {
+                DrawMenu();
+                isRunning = HandleInput();
+            }
         }
     }
 }

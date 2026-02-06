@@ -23,8 +23,9 @@ namespace WeatherAnalysis.Menus
             Graphics.UI.PrintMenu(MenuEnum);
         }
 
-        public void HandleInput()
+        public bool HandleInput()
         {
+            bool isActive = true;
             if (int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out int num))
             {
                 Console.Clear();
@@ -42,11 +43,13 @@ namespace WeatherAnalysis.Menus
 
                         break;
                     case Enums.Enum.MainMenu.Exit:
-
+                        isActive = false;
                         break;
                 }
             }
+            
             Console.Clear();
+            return isActive;
         }
         public void Run()
         {
@@ -54,9 +57,8 @@ namespace WeatherAnalysis.Menus
             while (isRunning)
             {
                 DrawMenu();
-                HandleInput();
+                isRunning = HandleInput();
             }
-            
         }
     }
 }
