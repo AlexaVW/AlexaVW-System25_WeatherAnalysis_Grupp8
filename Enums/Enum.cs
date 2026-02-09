@@ -36,5 +36,15 @@ namespace WeatherAnalysis.Enums
             Moldrisk_Low_To_High,
             Go_Back = 9
         }
+
+
+        public enum Windows
+        {
+            Avereges = 1,
+            Warm_To_Cold,
+            Humidity_Dry_To_Wet,
+            Moldrisk_Low_To_High,
+            Go_Back = 9
+        }
     }
 }

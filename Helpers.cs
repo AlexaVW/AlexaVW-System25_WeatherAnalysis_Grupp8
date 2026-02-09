@@ -42,22 +42,27 @@ namespace WeatherAnalysis
 
         private static Reading ConvertToReading(string dataRow)
         {
-
             string[] columns = dataRow.Split(",");
+            string sDateTime =      columns[0];
+            string sIsInside =      columns[1];
+            string sTemperature =   columns[2];
+            string sHumidity =      columns[3];
 
-            Match mDateTime =       RegexTester.TestDateTime(columns[0]);
-            Match mIsInside =       RegexTester.TestIsInside(columns[1]);
-            Match mTemperature =    RegexTester.TestTemperature(columns[2]);
-            Match mHumidity =       RegexTester.TestHumidity(columns[3]);
+            //Validate with Regex
+            Match mDateTime =       RegexTester.TestDateTime(sDateTime);
+            Match mIsInside =       RegexTester.TestIsInside(sIsInside);
+            Match mTemperature =    RegexTester.TestTemperature(sTemperature);
+            Match mHumidity =       RegexTester.TestHumidity(sHumidity);
 
+            //If all valid try parse
             if (mDateTime.Success && mIsInside.Success && mTemperature.Success && mHumidity.Success)
             {
                 try //Parse values
                 {
-                    DateTime dateTime = DateTime.Parse(mDateTime.Value);
-                    bool isInside = mIsInside.Value == "Inne" ? true : false;
-                    double temperature = double.Parse(mTemperature.Value);
-                    double humidity = double.Parse(mHumidity.Value);
+                    DateTime dateTime =     DateTime.Parse(mDateTime.Value);
+                    bool isInside =         mIsInside.Value == "Inne" ? true : false;
+                    double temperature =    double.Parse(mTemperature.Value.Replace(',','.'));
+                    double humidity =       double.Parse(mHumidity.Value);
 
                     return new Reading(dateTime, isInside, temperature, humidity);
                 }

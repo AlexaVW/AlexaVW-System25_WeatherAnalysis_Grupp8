@@ -36,7 +36,7 @@ namespace WeatherAnalysis
 
         public static Match TestHumidity(string text)
         {
-            Regex regex = new Regex(@"^\d{2}$");
+            Regex regex = new Regex(@"^100|[1-9]?\d$"); //If 100 | Or atleast 1 number between 1-9.
             Match match = regex.Match(text);
 
             return match;

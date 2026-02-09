@@ -6,17 +6,16 @@ namespace WeatherAnalysis
 {
     internal class Program
     {
+
         static void Main(string[] args)
         {
 
-            //Console.WriteLine(Helpers.GetFileText("WeatherData.txt")[0]);
+            //Load / Get data when program starts
+            Data.LoadData();
 
-            string[] dataRows = Reader.GetFileLines("WeatherData.txt");
-            List<Reading> readings = Helpers.GetReadingsFromDataRow(dataRows);
-
-            //Skicka in Reading i WeatherApp
-            WeatherApp weatherApp = new WeatherApp(readings);
-            //weatherApp.Start();
+            //Start MainMenu
+            Menus.MainMenu mainMenu = new Menus.MainMenu();
+            mainMenu.Run();
         }
     }
 }
