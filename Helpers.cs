@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -59,7 +60,7 @@ namespace WeatherAnalysis
             {
                 try //Parse values
                 {
-                    DateTime dateTime =     DateTime.Parse(mDateTime.Value);
+                    DateTime dateTime =     DateTime.Parse(mDateTime.Value, CultureInfo.InvariantCulture);
                     bool isInside =         mIsInside.Value == "Inne" ? true : false;
                     double temperature =    double.Parse(mTemperature.Value.Replace(',','.'));
                     double humidity =       double.Parse(mHumidity.Value);

@@ -10,7 +10,6 @@ namespace WeatherAnalysis
 
         static void Main(string[] args)
         {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("sv-SE");
 
             //Load / Get data when program starts
             Data.LoadData();
