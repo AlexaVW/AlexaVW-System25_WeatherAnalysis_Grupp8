@@ -12,10 +12,19 @@ namespace WeatherAnalysis
 
         public static string[] GetFileLines(string fileNameWithExtension)
         {
-            string projectPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data"));
-            string filePath = Path.Combine(projectPath, fileNameWithExtension);
+            string[] lines = null;
 
-            return File.ReadAllLines(filePath);
+            try
+            {
+                lines = File.ReadAllLines(path + fileNameWithExtension);
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine("Could not find file");
+            }
+
+
+            return lines;
         }
     }
 }
