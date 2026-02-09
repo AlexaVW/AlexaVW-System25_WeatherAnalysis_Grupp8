@@ -9,11 +9,11 @@ namespace WeatherAnalysis
 {
     public class WeatherApp
     {
-        public List<Reading> Readings { get; set; }
+        public List<Reading> AllReadings { get; set; }
 
         public WeatherApp(List<Reading> readings)
         {
-            Readings = readings;
+            AllReadings = readings;
         }
 
         public void Start()

@@ -42,38 +42,33 @@ namespace WeatherAnalysis
 
         private static Reading ConvertToReading(string dataRow)
         {
-            Regex regexDateTime = new Regex(@"^(?<date>\d{4}-\d{2}-\d{2}).(?<time>\d{2}:\d{2}:\d{2})$");
-            Regex regexisInside = new Regex(@"^(Inne|Ute)$");
-            Regex regexTemperature = new Regex(@"-?\d+\.\d+"); //Allow minus and single digit
-            Regex regexHumidity = new Regex(@"^\d{2}$");
-
 
             string[] columns = dataRow.Split(",");
-            bool isValidDateTime =      regexDateTime.IsMatch(columns[0]);
-            bool isValidIsInside =      regexisInside.IsMatch(columns[1]);
-            bool isValidTemperature =   regexTemperature.IsMatch(columns[2]);
-            bool isValidHumidity =      regexHumidity.IsMatch(columns[3]);
 
-            if (isValidDateTime && isValidIsInside && isValidTemperature && isValidHumidity)
+            Match mDateTime =       RegexTester.TestDateTime(columns[0]);
+            Match mIsInside =       RegexTester.TestIsInside(columns[1]);
+            Match mTemperature =    RegexTester.TestTemperature(columns[2]);
+            Match mHumidity =       RegexTester.TestHumidity(columns[3]);
+
+            if (mDateTime.Success && mIsInside.Success && mTemperature.Success && mHumidity.Success)
             {
                 try //Parse values
                 {
-                    DateTime dateTime = DateTime.Parse(columns[0]);
-                    bool isInside = columns[1] == "Inne" ? true : false;
-                    double temperature = double.Parse(columns[2]);
-                    double humidity = double.Parse(columns[3]);
+                    DateTime dateTime = DateTime.Parse(mDateTime.Value);
+                    bool isInside = mIsInside.Value == "Inne" ? true : false;
+                    double temperature = double.Parse(mTemperature.Value);
+                    double humidity = double.Parse(mHumidity.Value);
 
                     return new Reading(dateTime, isInside, temperature, humidity);
-
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Could not parse:\t{dataRow}");
+                    //Console.WriteLine($"Could not parse:\t{dataRow}");
                 }
             }
             else
             {
-                Console.WriteLine($"Denined by regex:\t{dataRow} |\tParseDate:{isValidDateTime} ParseLocation:{isValidIsInside} ParseTemp:{isValidTemperature} ParseHumidity:{isValidHumidity}");
+               //Console.WriteLine($"Denined by regex:\t{dataRow} |\tDate:{mDateTime.Success} - {mDateTime.Value} | Location:{mIsInside.Success} - {mIsInside.Value} | Temp:{mTemperature.Success} - {mTemperature.Value} | Humidity:{mHumidity.Success} - {mHumidity.Value} |");
             }
 
             return null;
