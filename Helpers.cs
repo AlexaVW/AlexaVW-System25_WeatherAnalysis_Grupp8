@@ -60,16 +60,17 @@ namespace WeatherAnalysis
             {
                 try //Parse values
                 {
-                    DateTime dateTime =     DateTime.Parse(mDateTime.Value, CultureInfo.InvariantCulture);
+                    DateTime dateTime =     DateTime.Parse(mDateTime.Value);
                     bool isInside =         mIsInside.Value == "Inne" ? true : false;
-                    double temperature =    double.Parse(mTemperature.Value.Replace(',','.'));
+                    double temperature =    double.Parse(mTemperature.Value.Replace('.',','));
                     double humidity =       double.Parse(mHumidity.Value);
 
                     return new Reading(dateTime, isInside, temperature, humidity);
                 }
                 catch (Exception ex)
                 {
-                    //Console.WriteLine($"Could not parse:\t{dataRow}");
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine($"Could not parse:\t{dataRow}");
                 }
             }
             else
