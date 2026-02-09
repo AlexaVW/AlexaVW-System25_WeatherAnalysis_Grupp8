@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Design;
 using WeatherAnalysis.Interfaces;
+using WeatherAnalysis.Models;
 
 namespace WeatherAnalysis
 {
@@ -9,9 +10,13 @@ namespace WeatherAnalysis
         {
 
             //Console.WriteLine(Helpers.GetFileText("WeatherData.txt")[0]);
-            Menus.MainMenu mainMenu = new Menus.MainMenu();
 
-            mainMenu.Run();
+            string[] dataRows = Reader.GetFileLines("WeatherData.txt");
+            List<Reading> readings = Helpers.GetReadingsFromDataRow(dataRows);
+
+            //Skicka in Reading i WeatherApp
+            WeatherApp weatherApp = new WeatherApp(readings);
+            //weatherApp.Start();
         }
     }
 }
