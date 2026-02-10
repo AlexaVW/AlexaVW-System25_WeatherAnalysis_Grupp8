@@ -134,7 +134,7 @@ namespace WeatherAnalysis
         public static void AverageMoldRisk(List<Reading> readings)
         {
 
-            var sortedGroup = SortedDateReadingGroup(readings, Enums.Enum.OrderBy.AVG_MoldRisk_LowToHigh);
+            var sortedGroup = SortedDateReadingGroup(readings, Enums.Enum.OrderBy.AVG_Humidity_HighToLow);
 
             Console.WriteLine("AVG Mold Risk Low to High");
             PrintReadingDateOnlyGroup(sortedGroup);
