@@ -30,7 +30,7 @@ namespace WeatherAnalysis.Enums
 
         public enum InsdieMenu
         {
-            Avereges = 1,
+            Averages = 1,
             Warm_To_Cold,
             Humidity_Dry_To_Wet,
             Moldrisk_Low_To_High,

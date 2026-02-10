@@ -33,15 +33,40 @@ namespace WeatherAnalysis.Menus
 
         public bool HandleInput()
         {
-            
-            Console.WriteLine("Leave empty to go back");
-            string input = Console.ReadLine();
-            Console.Clear();
-            if (input == "")
-                return false;
-            else
-                return true;
+            bool isActive = true;
+            if (int.TryParse(Console.ReadKey(true).KeyChar.ToString(), out int num))
+            {
+                Console.Clear();
+                switch ((Enums.Enum.InsdieMenu)num)
+                {
+                    case Enums.Enum.InsdieMenu.Averages:
+                        Helpers.AverageTemperature(Data.GetAllReadings().Where(r => r.IsInside == true).ToList());
+                        Console.WriteLine("Any key to continue...");
+                        Console.ReadKey(true);
+                        break;
 
+                    case Enums.Enum.InsdieMenu.Warm_To_Cold:
+                        Helpers.AverageWarmToCold(Data.GetAllReadings().Where(r => r.IsInside == true).ToList());
+                        Console.WriteLine("Any key to continue...");
+                        Console.ReadKey(true);
+
+                        break;
+
+                    case Enums.Enum.InsdieMenu.Humidity_Dry_To_Wet:
+                        break;
+
+                    case Enums.Enum.InsdieMenu.Moldrisk_Low_To_High:
+                        break;
+
+
+                    case Enums.Enum.InsdieMenu.Go_Back:
+                        isActive = false;
+                        break;
+                }
+            }
+
+            Console.Clear();
+            return isActive;
         }
 
     }
