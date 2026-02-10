@@ -41,9 +41,16 @@ namespace WeatherAnalysis.Menus
                 switch ((Enums.Enum.OutsideMenu)num)
                 {
                     case Enums.Enum.OutsideMenu.Averages:
+                        Helpers.AverageTemperature(Data.GetAllReadings().Where(r => r.IsInside == false).ToList());
+                        Console.WriteLine("Any key to continue...");
+                        Console.ReadKey(true);
                         break;
 
                     case Enums.Enum.OutsideMenu.Warm_To_Cold:
+                        Helpers.AverageWarmToCold(Data.GetAllReadings().Where(r => r.IsInside == false).ToList());
+                        Console.WriteLine("Any key to continue...");
+                        Console.ReadKey(true);
+                        
                         break;
 
                     case Enums.Enum.OutsideMenu.Humidity_Dry_To_Wet:

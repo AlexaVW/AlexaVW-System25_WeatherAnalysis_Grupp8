@@ -69,8 +69,8 @@ namespace WeatherAnalysis
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine($"Could not parse:\t{dataRow}");
+                    //Console.WriteLine(ex.Message);
+                    //Console.WriteLine($"Could not parse:\t{dataRow}");
                 }
             }
             else
@@ -82,21 +82,44 @@ namespace WeatherAnalysis
         }
 
         //Medeltemperatur och luftfuktighet per dag, för valt datum(Sökmöjlighet med validering).
-
         public static void AverageTemperature(List<Reading> readings)
         {
+            //Group
+            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
+
+            Console.WriteLine("Avg by Date");
+            PrintReadingDateOnlyGroup(group);
 
         }
 
-        public static void PrintReading(List<Reading> readings)
+        // Sortering av varmast till kallaste dagen enligt medeltemperatur per dag
+        public static void AverageWarmToCold(List<Reading> readings)
+        {
+            //Group
+            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
+            var sortedGroup = group.OrderByDescending(g => g.Average(g => g.Temperature));
+
+            Console.WriteLine("Avg by Warm to Cold");
+            PrintReadingDateOnlyGroup(sortedGroup);
+
+        }
+
+
+
+        private static void PrintReadingDateOnlyGroup(IEnumerable<IGrouping<DateOnly,Reading>> readingDateGroup)
+        {
+            foreach (var group in readingDateGroup)
+            {
+                Console.WriteLine($"{group.Key} | Temp: {group.Average(r => r.Temperature).ToString("N2").PadRight(8)}  Humidity: {group.Average(r => r.Humidity).ToString("N2")}");
+            }
+        }
+
+
+        private static void PrintReading(List<Reading> readings)
         {
             foreach(var reading in readings)
             {
-                Console.Write($"{reading.Date.ToString().PadRight(12)}");
-                Console.Write($"Inside: {reading.IsInside.ToString().PadRight(12)}");
-                Console.Write($"Temp: {reading.Temperature.ToString().PadRight(12)}");
-                Console.Write($"Humidity: {reading.Humidity.ToString().PadRight(12)}");
-                Console.Write($"Mold risk: {reading.MoldRisk.ToString().PadRight(12)}");
+                reading.Print();
             }
         }
 

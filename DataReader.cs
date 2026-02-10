@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeatherAnalysis
 {
-    internal class Reader
+    internal class DataReader
     {
         public static string path = "../../../Data/";
 
