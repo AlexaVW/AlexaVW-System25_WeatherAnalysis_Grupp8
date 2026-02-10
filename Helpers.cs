@@ -171,6 +171,36 @@ namespace WeatherAnalysis
             }
         }
 
+        public static DateOnly GetMetro(List<Reading> readings, double targetTemp, DateOnly earliestDate, DateOnly latestDate)
+        {
+            DateOnly dateFound = new DateOnly();
+            readings = readings.Where(r => r.Date >= new DateTime(earliestDate,TimeOnly.MinValue)).Where(r => r.Date <= new DateTime(latestDate, TimeOnly.MaxValue)).ToList();
+            var groups = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
 
+            int amountInRow = 0;
+
+            foreach(var group in groups)
+            {
+                double temp = group.Average(r => r.Temperature);
+                if(temp < targetTemp)
+                {
+                    amountInRow++;
+                }
+                else 
+                {
+                    amountInRow = 0;
+                }
+
+                if(amountInRow >= 5)
+                {
+                    dateFound = group.Key;
+                    Console.WriteLine(dateFound);
+                    dateFound = dateFound.AddDays(-4);
+                    Console.WriteLine(dateFound);
+                    break;
+                }
+            }
+            return dateFound;
+        }
     }
 }
