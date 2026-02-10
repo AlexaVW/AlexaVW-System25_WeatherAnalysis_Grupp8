@@ -81,5 +81,25 @@ namespace WeatherAnalysis
             return null;
         }
 
+        //Medeltemperatur och luftfuktighet per dag, för valt datum(Sökmöjlighet med validering).
+
+        public static void AverageTemperature(List<Reading> readings)
+        {
+
+        }
+
+        public static void PrintReading(List<Reading> readings)
+        {
+            foreach(var reading in readings)
+            {
+                Console.Write($"{reading.Date.ToString().PadRight(12)}");
+                Console.Write($"Inside: {reading.IsInside.ToString().PadRight(12)}");
+                Console.Write($"Temp: {reading.Temperature.ToString().PadRight(12)}");
+                Console.Write($"Humidity: {reading.Humidity.ToString().PadRight(12)}");
+                Console.Write($"Mold risk: {reading.MoldRisk.ToString().PadRight(12)}");
+            }
+        }
+
+
     }
 }
