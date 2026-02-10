@@ -73,11 +73,20 @@ namespace WeatherAnalysis.Menus
                         break;
 
                     case Enums.Enum.OutsideMenu.Meteorological_Autumn:
+                        DateOnly metroDateAutumn = Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 10, new DateOnly(2016, 8, 1), new DateOnly(2017, 2, 14));
+
+                        Console.WriteLine("Autumn Metrological Date");
+                        Console.WriteLine(metroDateAutumn);
+                        Console.ReadKey(true);
                         break;
 
                     case Enums.Enum.OutsideMenu.Meteorological_Winter:
-                        break;
+                        DateOnly metroDateWinter = Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 1, new DateOnly(2016, 1, 1), new DateOnly(2016, 12, 31));
 
+                        Console.WriteLine("Winter Metrological Date");
+                        Console.WriteLine(metroDateWinter);
+                        Console.ReadKey(true);
+                        break;
 
                     case Enums.Enum.OutsideMenu.Go_Back:
                         isActive = false;

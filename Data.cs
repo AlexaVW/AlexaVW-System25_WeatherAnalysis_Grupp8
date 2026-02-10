@@ -15,7 +15,7 @@ namespace WeatherAnalysis
         public static void LoadData()
         {
             Console.Write("Reading data... ");
-            string[] dataRows = DataReader.GetFileLines("WeatherData.txt");
+            string[] dataRows = DataReaderWriter.GetFileLines("WeatherData.txt");
             Console.WriteLine("Done");
 
             Console.Write("Parsing data... ");

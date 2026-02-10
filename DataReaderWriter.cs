@@ -6,25 +6,29 @@ using System.Threading.Tasks;
 
 namespace WeatherAnalysis
 {
-    internal class DataReader
+    internal class DataReaderWriter
     {
         public static string path = "../../../Data/";
 
-        public static string[] GetFileLines(string fileNameWithExtension)
+        public static string[] GetFileLines(string fileName)
         {
             string[] lines = null;
 
             try
             {
-                lines = File.ReadAllLines(path + fileNameWithExtension);
+                lines = File.ReadAllLines(path + fileName);
             }
             catch (Exception e) 
             {
                 Console.WriteLine("Could not find file");
             }
 
-
             return lines;
+        }
+
+        public static void WriteListToFile(List<string> textRows, string fileName)
+        {
+            File.WriteAllLines(path + fileName, textRows);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WeatherAnalysis.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WeatherAnalysis
 {
@@ -171,18 +172,24 @@ namespace WeatherAnalysis
             }
         }
 
-        public static DateOnly GetMetro(List<Reading> readings, double targetTemp, DateOnly earliestDate, DateOnly latestDate)
+        public static DateOnly GetMetro(List<Reading> readings, double underTemp, DateOnly earliestDate, DateOnly latestDate)
         {
+            
             DateOnly dateFound = new DateOnly();
-            readings = readings.Where(r => r.Date >= new DateTime(earliestDate,TimeOnly.MinValue)).Where(r => r.Date <= new DateTime(latestDate, TimeOnly.MaxValue)).ToList();
-            var groups = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
+            readings = readings
+                .Where(r => r.Date >= new DateTime(earliestDate,TimeOnly.MinValue))
+                .Where(r => r.Date <= new DateTime(latestDate, TimeOnly.MaxValue))
+                .ToList();
+
+            var groups = readings
+                .GroupBy(r => DateOnly.FromDateTime(r.Date));
 
             int amountInRow = 0;
 
             foreach(var group in groups)
             {
                 double temp = group.Average(r => r.Temperature);
-                if(temp < targetTemp)
+                if(temp < underTemp)
                 {
                     amountInRow++;
                 }
@@ -193,14 +200,49 @@ namespace WeatherAnalysis
 
                 if(amountInRow >= 5)
                 {
-                    dateFound = group.Key;
-                    Console.WriteLine(dateFound);
-                    dateFound = dateFound.AddDays(-4);
-                    Console.WriteLine(dateFound);
+                    dateFound = group.Key.AddDays(-4);
                     break;
                 }
             }
             return dateFound;
+        }
+
+
+        public static void WriteManyFiles(List<Reading> allReadings)
+        {
+            List<Reading> outsideReadings = allReadings.Where(r => r.IsInside == false).ToList();
+            List<Reading> insideReadings = allReadings.Where(r => r.IsInside == true).ToList();
+
+            //En textfil ska skapas som innehåller följande information.
+            //Medeltemperatur ute och inne, per månad
+            //Medelluftfuktighet inne och ute, per månad
+            //Medelmögelrisk inne och ute, per månad.
+            //Datum för höst och vinter 2016(om något av detta inte inträffar, ange när det var som
+            //närmast)
+            //Skriv också ut algoritmen för mögel
+
+            List<string> avgTempPerMonth = new List<string>();
+            List<string> avgHumidityPerMonth = new List<string>();
+            List<string> avgMoldRiskPerMonth = new List<string>();
+            List<string> dateMetroAutumn = new List<string>();
+            List<string> dateMetroWinter = new List<string>();
+
+            List<string> moldAlgorith = new List<string>();
+
+
+            var groupsMonth = allReadings.GroupBy(r => r.Date.Month);
+
+
+            foreach (var group in groupsMonth) 
+            {
+                string textRow = $"{group.Key} - Avg Inside Temp: {group.Average(r => r.Temperature)}"; //Fixa så att Månad skrivs i Text istllet för siffra
+                avgTempPerMonth.Add(textRow);
+
+            }
+
+            DataReaderWriter.WriteListToFile(avgTempPerMonth, "MonthlyFile.txt");
+
+
         }
     }
 }
