@@ -108,58 +108,25 @@ namespace WeatherAnalysis
         }
         
 
-        // Sortering av varmast till kallaste dagen enligt medeltemperatur per dag
-        public static void AverageWarmToCold(List<Reading> readings)
-        {
-            //Group
-            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
-            var sortedGroup = group.OrderByDescending(g => g.Average(g => g.Temperature));
-
-            Console.WriteLine("Avg Warm to Cold");
-            PrintReadings(sortedGroup);
-
-        }
-
-        public static void AverageHumidityDryToWet(List<Reading> readings)
-        {
-            //Group
-            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
-            var sortedGroup = group.OrderBy(g => g.Average(g => g.Humidity));
-
-            Console.WriteLine("Avg Humidity Dry to Wet");
-            PrintReadings(sortedGroup);
-
-        }
-
-        public static void AverageMoldRisk(List<Reading> readings)
-        {
-
-            var sortedGroup = GetGroupAndSort(readings, Enums.Enum.OrderBy.AVG_Humidity_HighToLow);
-
-            Console.WriteLine("AVG Mold Risk Low to High");
-            PrintReadings(sortedGroup);
-
-        }
-
         public static void PrintByOrder(List<Reading> readings, Enums.Enum.OrderBy selectedOrderBy)
         {
-            //Sort group by date
-            var sortedGroup = GetGroupAndSort(readings, selectedOrderBy);
+            //Group by Date and sort
+            var sortedGroup = GetGroupByDateAndSort(readings, selectedOrderBy);
 
-            //Header
+            //Print Header
             Console.WriteLine(selectedOrderBy.ToString()); 
-            //Print data
+            //Print Data
             PrintReadings(sortedGroup);
 
         }
 
 
-        private static IEnumerable<IGrouping<DateOnly, Reading>> GetGroupAndSort(List<Reading> readings, Enums.Enum.OrderBy orderSelection)
+        private static IEnumerable<IGrouping<DateOnly, Reading>> GetGroupByDateAndSort(List<Reading> readings, Enums.Enum.OrderBy selectedOrderBy)
         {
             var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
 
-            IEnumerable<IGrouping<DateOnly, Reading>> sortedGroup = null;
-            switch (orderSelection)
+            IEnumerable<IGrouping<DateOnly, Reading>> sortedGroup = null; //Cannot be null if all Enums have a case
+            switch (selectedOrderBy)
             {
                 case Enums.Enum.OrderBy.AVG_Temp_LowToHigh: 
                     sortedGroup = group.OrderBy(g => g.Average(g => g.Temperature)); 
@@ -201,15 +168,6 @@ namespace WeatherAnalysis
                 string moldRisk =   group.Average(r => r.MoldRisk).ToString("N0");
 
                 Console.WriteLine($"Date: {date.PadRight(16)}Temp: {temp.PadRight(12)}Humidity: {humidity.PadRight(12)}Mold risk: {moldRisk.PadRight(12)}");
-            }
-        }
-
-
-        private static void PrintReading(List<Reading> readings)
-        {
-            foreach(var reading in readings)
-            {
-                reading.Print();
             }
         }
 

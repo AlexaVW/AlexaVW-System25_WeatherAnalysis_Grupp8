@@ -54,20 +54,20 @@ namespace WeatherAnalysis.Menus
                         break;
 
                     case Enums.Enum.OutsideMenu.Warm_To_Cold:
-                        Helpers.AverageWarmToCold(readings);
+                        Helpers.PrintByOrder(readings, Enums.Enum.OrderBy.AVG_Temp_HighToLow);
                         Console.WriteLine("Any key to continue...");
                         Console.ReadKey(true);
                         
                         break;
 
                     case Enums.Enum.OutsideMenu.Humidity_Dry_To_Wet:
-                        Helpers.AverageHumidityDryToWet(readings);
+                        Helpers.PrintByOrder(readings, Enums.Enum.OrderBy.AVG_Humidity_LowToHigh);
                         Console.WriteLine("Any key to continue...");
                         Console.ReadKey(true);
                         break;
 
                     case Enums.Enum.OutsideMenu.Moldrisk_Low_To_High:
-                        Helpers.AverageMoldRisk(readings);
+                        Helpers.PrintByOrder(readings, Enums.Enum.OrderBy.AVG_MoldRisk_LowToHigh);
                         Console.WriteLine("Any key to continue...");
                         Console.ReadKey(true);
                         break;
