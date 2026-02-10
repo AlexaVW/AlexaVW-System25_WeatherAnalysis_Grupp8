@@ -15,12 +15,6 @@ namespace WeatherAnalysis
         {
             List<Reading> readings = new List<Reading>();
 
-            // 2016-05-31 13:58:30
-            // Inne
-            // 24.8
-            // 42
-
-            // 2016-05-31 13:58:30,Inne,24.8,42
             foreach (var dataRow in dataRows)
             {
                 
@@ -30,13 +24,6 @@ namespace WeatherAnalysis
                     readings.Add(reading);
                 }
             }
-
-            /*
-            foreach(var reading in readings)
-            {
-                Console.WriteLine($"Date: {reading.Date}\tInside: {reading.IsInside}\tTemp: {reading.Temperature}\tHumidity: {reading.Humidity}");
-            }
-            */
 
             return readings;
         }
@@ -81,28 +68,6 @@ namespace WeatherAnalysis
             return null;
         }
 
-        //Medeltemperatur och luftfuktighet per dag, för valt datum(Sökmöjlighet med validering).
-        public static void AverageTemperature(List<Reading> readings)
-        {
-            //Group
-            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
-
-            Console.WriteLine("Avg by Date");
-            PrintReadingDateOnlyGroup(group);
-
-        }
-
-        public static void AverageTemperatureDateRange(List<Reading> readings, DateTime startDate, DateTime endDate)
-        {
-            readings = readings.Where(r => r.Date >= startDate).Where(r => r.Date <= endDate).ToList();
-            //Group
-            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
-
-            Console.WriteLine("Avg by Date");
-            PrintReadingDateOnlyGroup(group);
-
-        }
-
         public static DateTime GetDate(bool isStartDate)
         {
             bool isValidDate = false;
@@ -113,13 +78,12 @@ namespace WeatherAnalysis
                 Console.WriteLine("Min: " + Data.GetAllReadings().Min(r => DateOnly.FromDateTime(r.Date)));
                 Console.WriteLine("Max: " + Data.GetAllReadings().Max(r => DateOnly.FromDateTime(r.Date)));
 
-                if(isStartDate)
+                if (isStartDate)
                     Console.WriteLine("Choose start date");
                 else
                     Console.WriteLine("Choose end date");
 
                 isValidDate = DateOnly.TryParse(Console.ReadLine(), out date);
-
             }
 
             if (isStartDate)
@@ -130,8 +94,21 @@ namespace WeatherAnalysis
             {
                 return new DateTime(date, TimeOnly.MaxValue);
             }
-            
         }
+
+
+        public static void AverageTemperatureDateRange(List<Reading> readings, DateTime startDate, DateTime endDate)
+        {
+            readings = readings.Where(r => r.Date >= startDate).Where(r => r.Date <= endDate).ToList();
+            
+            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
+
+            Console.WriteLine("Avg by Date");
+            PrintReadingDateOnlyGroup(group);
+
+        }
+
+        
 
         // Sortering av varmast till kallaste dagen enligt medeltemperatur per dag
         public static void AverageWarmToCold(List<Reading> readings)
@@ -140,7 +117,18 @@ namespace WeatherAnalysis
             var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
             var sortedGroup = group.OrderByDescending(g => g.Average(g => g.Temperature));
 
-            Console.WriteLine("Avg by Warm to Cold");
+            Console.WriteLine("Avg Warm to Cold");
+            PrintReadingDateOnlyGroup(sortedGroup);
+
+        }
+
+        public static void AverageMoldRisk(List<Reading> readings)
+        {
+            //Group
+            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
+            var sortedGroup = group.OrderBy(g => g.Average(g => g.MoldRisk));
+
+            Console.WriteLine("AVG Mold Risk Low to High");
             PrintReadingDateOnlyGroup(sortedGroup);
 
         }
@@ -151,7 +139,12 @@ namespace WeatherAnalysis
         {
             foreach (var group in readingDateGroup)
             {
-                Console.WriteLine($"{group.Key} | Temp: {group.Average(r => r.Temperature).ToString("N2").PadRight(8)}  Humidity: {group.Average(r => r.Humidity).ToString("N2")}");
+                string date =       group.Key.ToString();
+                string temp =       group.Average(r => r.Temperature).ToString("N2");
+                string humidity =   group.Average(r => r.Humidity).ToString("N2");
+                string moldRisk =   group.Average(r => r.MoldRisk).ToString("N0");
+
+                Console.WriteLine($"Date: {date.PadRight(16)}Temp: {temp.PadRight(12)}Humidity: {humidity.PadRight(12)}Mold risk: {moldRisk.PadRight(12)}");
             }
         }
 

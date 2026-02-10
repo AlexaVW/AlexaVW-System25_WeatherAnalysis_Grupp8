@@ -61,6 +61,9 @@ namespace WeatherAnalysis.Menus
                         break;
 
                     case Enums.Enum.InsdieMenu.Moldrisk_Low_To_High:
+                        Helpers.AverageMoldRisk(readings);
+                        Console.WriteLine("Any key to continue...");
+                        Console.ReadKey(true);
                         break;
 
 

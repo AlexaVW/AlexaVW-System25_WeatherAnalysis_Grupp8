@@ -18,6 +18,14 @@ namespace WeatherAnalysis
             return match;
         }
 
+        public static Match TestDate(string text)
+        {
+            Regex regex = new Regex(@"^(?<date>\d{4}-\d{2}-\d{2})$");
+            Match match = regex.Match(text);
+
+            return match;
+        }
+
         public static Match TestIsInside(string text)
         {
             Regex regex = new Regex(@"^(Inne|Ute)$");
