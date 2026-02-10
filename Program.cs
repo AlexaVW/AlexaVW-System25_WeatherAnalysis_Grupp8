@@ -12,6 +12,7 @@ namespace WeatherAnalysis
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("sv-SE");
             Data.LoadData();
+            
 
             //Start MainMenu
             Menus.MainMenu mainMenu = new Menus.MainMenu();

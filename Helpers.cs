@@ -92,6 +92,47 @@ namespace WeatherAnalysis
 
         }
 
+        public static void AverageTemperatureDateRange(List<Reading> readings, DateTime startDate, DateTime endDate)
+        {
+            readings = readings.Where(r => r.Date >= startDate).Where(r => r.Date <= endDate).ToList();
+            //Group
+            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
+
+            Console.WriteLine("Avg by Date");
+            PrintReadingDateOnlyGroup(group);
+
+        }
+
+        public static DateTime GetDate(bool isStartDate)
+        {
+            bool isValidDate = false;
+            DateOnly date = new DateOnly();
+
+            while (!isValidDate)
+            {
+                Console.WriteLine("Min: " + Data.GetAllReadings().Min(r => DateOnly.FromDateTime(r.Date)));
+                Console.WriteLine("Max: " + Data.GetAllReadings().Max(r => DateOnly.FromDateTime(r.Date)));
+
+                if(isStartDate)
+                    Console.WriteLine("Choose start date");
+                else
+                    Console.WriteLine("Choose end date");
+
+                isValidDate = DateOnly.TryParse(Console.ReadLine(), out date);
+
+            }
+
+            if (isStartDate)
+            {
+                return new DateTime(date, TimeOnly.MinValue);
+            }
+            else
+            {
+                return new DateTime(date, TimeOnly.MaxValue);
+            }
+            
+        }
+
         // Sortering av varmast till kallaste dagen enligt medeltemperatur per dag
         public static void AverageWarmToCold(List<Reading> readings)
         {
