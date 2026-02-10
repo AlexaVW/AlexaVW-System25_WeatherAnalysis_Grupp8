@@ -230,14 +230,14 @@ namespace WeatherAnalysis
             List<string> moldAlgorith = new List<string>();
 
 
-            var groupsMonth = allReadings.GroupBy(r => r.Date.Month);
-
+            var groupsMonth = allReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM")); //Month in text format
+            //var groupsMonth = allReadings.GroupBy(r => r.Date.Month); //Month in number format
 
             foreach (var group in groupsMonth) 
             {
                 string textRow = $"{group.Key} - Avg Inside Temp: {group.Average(r => r.Temperature)}"; //Fixa så att Månad skrivs i Text istllet för siffra
                 avgTempPerMonth.Add(textRow);
-
+                
             }
 
             DataReaderWriter.WriteListToFile(avgTempPerMonth, "MonthlyFile.txt");

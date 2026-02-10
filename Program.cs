@@ -15,7 +15,7 @@ namespace WeatherAnalysis
             Data.LoadData();
 
             Helpers.WriteManyFiles(Data.GetAllReadings());
-            Console.ReadKey();
+            
 
             //Start MainMenu
             Menus.MainMenu mainMenu = new Menus.MainMenu();
