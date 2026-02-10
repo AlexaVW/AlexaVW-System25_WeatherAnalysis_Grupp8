@@ -104,7 +104,7 @@ namespace WeatherAnalysis
             var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
 
             Console.WriteLine("Avg by Date");
-            PrintReadingDateOnlyGroup(group);
+            PrintReadings(group);
         }
         
 
@@ -116,7 +116,7 @@ namespace WeatherAnalysis
             var sortedGroup = group.OrderByDescending(g => g.Average(g => g.Temperature));
 
             Console.WriteLine("Avg Warm to Cold");
-            PrintReadingDateOnlyGroup(sortedGroup);
+            PrintReadings(sortedGroup);
 
         }
 
@@ -127,21 +127,34 @@ namespace WeatherAnalysis
             var sortedGroup = group.OrderBy(g => g.Average(g => g.Humidity));
 
             Console.WriteLine("Avg Humidity Dry to Wet");
-            PrintReadingDateOnlyGroup(sortedGroup);
+            PrintReadings(sortedGroup);
 
         }
 
         public static void AverageMoldRisk(List<Reading> readings)
         {
 
-            var sortedGroup = SortedDateReadingGroup(readings, Enums.Enum.OrderBy.AVG_Humidity_HighToLow);
+            var sortedGroup = GetGroupAndSort(readings, Enums.Enum.OrderBy.AVG_Humidity_HighToLow);
 
             Console.WriteLine("AVG Mold Risk Low to High");
-            PrintReadingDateOnlyGroup(sortedGroup);
+            PrintReadings(sortedGroup);
 
         }
 
-        private static IEnumerable<IGrouping<DateOnly, Reading>> SortedDateReadingGroup(List<Reading> readings, Enums.Enum.OrderBy orderSelection)
+        public static void PrintByOrder(List<Reading> readings, Enums.Enum.OrderBy selectedOrderBy)
+        {
+            //Sort group by date
+            var sortedGroup = GetGroupAndSort(readings, selectedOrderBy);
+
+            //Header
+            Console.WriteLine(selectedOrderBy.ToString()); 
+            //Print data
+            PrintReadings(sortedGroup);
+
+        }
+
+
+        private static IEnumerable<IGrouping<DateOnly, Reading>> GetGroupAndSort(List<Reading> readings, Enums.Enum.OrderBy orderSelection)
         {
             var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
 
@@ -178,8 +191,7 @@ namespace WeatherAnalysis
         }
 
 
-
-        private static void PrintReadingDateOnlyGroup(IEnumerable<IGrouping<DateOnly,Reading>> readingDateGroup)
+        private static void PrintReadings(IEnumerable<IGrouping<DateOnly,Reading>> readingDateGroup)
         {
             foreach (var group in readingDateGroup)
             {
