@@ -105,9 +105,7 @@ namespace WeatherAnalysis
 
             Console.WriteLine("Avg by Date");
             PrintReadingDateOnlyGroup(group);
-
         }
-
         
 
         // Sortering av varmast till kallaste dagen enligt medeltemperatur per dag
@@ -122,14 +120,60 @@ namespace WeatherAnalysis
 
         }
 
-        public static void AverageMoldRisk(List<Reading> readings)
+        public static void AverageHumidityDryToWet(List<Reading> readings)
         {
             //Group
             var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
-            var sortedGroup = group.OrderBy(g => g.Average(g => g.MoldRisk));
+            var sortedGroup = group.OrderBy(g => g.Average(g => g.Humidity));
+
+            Console.WriteLine("Avg Humidity Dry to Wet");
+            PrintReadingDateOnlyGroup(sortedGroup);
+
+        }
+
+        public static void AverageMoldRisk(List<Reading> readings)
+        {
+
+            var sortedGroup = SortedDateReadingGroup(readings, Enums.Enum.OrderBy.AVG_MoldRisk_LowToHigh);
 
             Console.WriteLine("AVG Mold Risk Low to High");
             PrintReadingDateOnlyGroup(sortedGroup);
+
+        }
+
+        private static IEnumerable<IGrouping<DateOnly, Reading>> SortedDateReadingGroup(List<Reading> readings, Enums.Enum.OrderBy orderSelection)
+        {
+            var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
+
+            IEnumerable<IGrouping<DateOnly, Reading>> sortedGroup = null;
+            switch (orderSelection)
+            {
+                case Enums.Enum.OrderBy.AVG_Temp_LowToHigh: 
+                    sortedGroup = group.OrderBy(g => g.Average(g => g.Temperature)); 
+                    break;
+
+                case Enums.Enum.OrderBy.AVG_Temp_HighToLow:
+                    sortedGroup = group.OrderByDescending(g => g.Average(g => g.Temperature));
+                    break;
+
+                case Enums.Enum.OrderBy.AVG_Humidity_LowToHigh:
+                    sortedGroup = group.OrderBy(g => g.Average(g => g.Humidity));
+                    break;
+
+                case Enums.Enum.OrderBy.AVG_Humidity_HighToLow:
+                    sortedGroup = group.OrderByDescending(g => g.Average(g => g.Humidity));
+                    break;
+
+                case Enums.Enum.OrderBy.AVG_MoldRisk_LowToHigh:
+                    sortedGroup = group.OrderBy(g => g.Average(g => g.MoldRisk));
+                    break;
+
+                case Enums.Enum.OrderBy.AVG_MoldRisk_HighToLow:
+                    sortedGroup = group.OrderByDescending(g => g.Average(g => g.MoldRisk));
+                    break;
+            }
+
+            return sortedGroup;
 
         }
 

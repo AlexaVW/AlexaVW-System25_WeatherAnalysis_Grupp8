@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeatherAnalysis.Enums
 {
-    internal class Enum
+    public class Enum
     {
         public enum MainMenu
         {
@@ -45,6 +45,18 @@ namespace WeatherAnalysis.Enums
             Humidity_Dry_To_Wet,
             Moldrisk_Low_To_High,
             Go_Back = 9
+        }
+
+        public enum OrderBy
+        {
+            AVG_Temp_LowToHigh,
+            AVG_Temp_HighToLow,
+
+            AVG_Humidity_LowToHigh,
+            AVG_Humidity_HighToLow,
+
+            AVG_MoldRisk_LowToHigh,
+            AVG_MoldRisk_HighToLow,
         }
     }
 }

@@ -61,6 +61,9 @@ namespace WeatherAnalysis.Menus
                         break;
 
                     case Enums.Enum.OutsideMenu.Humidity_Dry_To_Wet:
+                        Helpers.AverageHumidityDryToWet(readings);
+                        Console.WriteLine("Any key to continue...");
+                        Console.ReadKey(true);
                         break;
 
                     case Enums.Enum.OutsideMenu.Moldrisk_Low_To_High:
