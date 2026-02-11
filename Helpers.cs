@@ -250,29 +250,27 @@ namespace WeatherAnalysis
 
         public static List<string> GetText(IEnumerable<IGrouping<string, Reading>> groups, string header, List<string> list, WriteColumn selectedColumn)
         {
-            
-            
+
             list.Add(header);
             switch (selectedColumn)
             {
                 case WriteColumn.Temp:
-
+                    foreach (var group in groups)
+                    {
+                        string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}";
+                        list.Add(textRowTempPerMonth);
+                    }
                     break;
                 case WriteColumn.Humidity:
+
                     break;
                 case WriteColumn.MoldRisk:
+
                     break;
             }
-
-            foreach (var group in groups)
-            {
-                string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}";
-                list.Add(textRowTempPerMonth);
-            }
             list.Add(" ");
+
             return list;
-
-
         }
 
 
