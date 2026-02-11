@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WeatherAnalysis.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static WeatherAnalysis.Enums.Enum;
 
 namespace WeatherAnalysis
 {
@@ -218,7 +219,7 @@ namespace WeatherAnalysis
             var groupsInsideReadingsMonth = insideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM"));
             //var groupsMonth = allReadings.GroupBy(r => r.Date.Month); ///Groups on Months in number format
 
-            List<string> avgTempPerMonth =      new List<string>();
+            List<string> listToWrite =      new List<string>();
             List<string> avgHumidityPerMonth =  new List<string>();
             List<string> avgMoldRiskPerMonth =  new List<string>();
             List<string> dateMetroAutumn =      new List<string>();
@@ -236,25 +237,40 @@ namespace WeatherAnalysis
             //Skriv också ut algoritmen för mögel
 
 
-            //Outside
-            avgTempPerMonth.Add("Outside Temp");
-            foreach (var group in groupsOutsideReadingsMonth) 
+            listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside Temp", listToWrite, WriteColumn.Temp);
+            listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside Temp", listToWrite,  WriteColumn.Temp);
+
+            listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside Humidity", listToWrite, WriteColumn.Humidity);
+            listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside Humidity", listToWrite, WriteColumn.Humidity);
+
+            DataReaderWriter.WriteListToFile(listToWrite, "MonthlyFile.txt");
+
+
+        }
+
+        public static List<string> GetText(IEnumerable<IGrouping<string, Reading>> groups, string header, List<string> list, WriteColumn selectedColumn)
+        {
+            
+            
+            list.Add(header);
+            switch (selectedColumn)
             {
-                string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}"; //Fixa så att Månad skrivs i Text istllet för siffra
-                avgTempPerMonth.Add(textRowTempPerMonth);
+                case WriteColumn.Temp:
 
+                    break;
+                case WriteColumn.Humidity:
+                    break;
+                case WriteColumn.MoldRisk:
+                    break;
             }
-            avgTempPerMonth.Add(" ");
-            avgTempPerMonth.Add("Inside Temp");
-            //Inside
-            foreach (var group in groupsInsideReadingsMonth)
+
+            foreach (var group in groups)
             {
-                string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}"; //Fixa så att Månad skrivs i Text istllet för siffra
-                avgTempPerMonth.Add(textRowTempPerMonth);
-
+                string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}";
+                list.Add(textRowTempPerMonth);
             }
-
-            DataReaderWriter.WriteListToFile(avgTempPerMonth, "MonthlyFile.txt");
+            list.Add(" ");
+            return list;
 
 
         }
