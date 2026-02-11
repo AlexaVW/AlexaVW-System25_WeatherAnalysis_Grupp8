@@ -235,7 +235,14 @@ namespace WeatherAnalysis
             //Datum för höst och vinter 2016(om något av detta inte inträffar, ange när det var som
             //närmast)
             //Skriv också ut algoritmen för mögel
-
+            string moldFormula = $@"if (Temperature < 5 || Temperature > 40)
+    moldRisk = 0;
+else if (Humidity >= 80)
+    moldRisk = 100;
+else if (Humidity >= 70)
+    moldRisk = 50;
+else
+    moldRisk = 0;";
 
             listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside Temp", listToWrite, WriteColumn.Temp);
             listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside Temp", listToWrite,  WriteColumn.Temp);
@@ -243,29 +250,49 @@ namespace WeatherAnalysis
             listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside Humidity", listToWrite, WriteColumn.Humidity);
             listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside Humidity", listToWrite, WriteColumn.Humidity);
 
+            listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside MoldRisk", listToWrite, WriteColumn.MoldRisk);
+            listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside MoldRisk", listToWrite, WriteColumn.MoldRisk);
+
+            listToWrite.Add("Metro Autumn");
+            listToWrite.Add(Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 10, new DateOnly(2016, 8, 1), new DateOnly(2017, 2, 14)).ToString());
+            listToWrite.Add("");
+
+            listToWrite.Add("Metro Winter");
+            listToWrite.Add(Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 1, new DateOnly(2016, 1, 1), new DateOnly(2016, 12, 31)).ToString());
+            listToWrite.Add("");
+            
+            listToWrite.Add("Mold formula");
+            listToWrite.Add(moldFormula);
+            
             DataReaderWriter.WriteListToFile(listToWrite, "MonthlyFile.txt");
-
-
         }
 
         public static List<string> GetText(IEnumerable<IGrouping<string, Reading>> groups, string header, List<string> list, WriteColumn selectedColumn)
         {
-
+            string text = "";
             list.Add(header);
             switch (selectedColumn)
             {
                 case WriteColumn.Temp:
                     foreach (var group in groups)
                     {
-                        string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}";
-                        list.Add(textRowTempPerMonth);
+                        text = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N1")}";
+                        list.Add(text);
                     }
                     break;
                 case WriteColumn.Humidity:
-
+                    foreach (var group in groups)
+                    {
+                        text = $"{group.Key.PadRight(10)} {group.Average(r => r.Humidity).ToString("N0").PadRight(4)}%";
+                        list.Add(text);
+                    }
                     break;
                 case WriteColumn.MoldRisk:
-
+                    foreach (var group in groups)
+                    {
+                        text = $"{group.Key.PadRight(10)} {group.Average(r => r.MoldRisk).ToString("N0").PadRight(4)}%";
+                        list.Add(text);
+                    }
                     break;
             }
             list.Add(" ");

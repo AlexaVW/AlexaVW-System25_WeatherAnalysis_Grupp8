@@ -1,32 +1,69 @@
 Average Inside Temp
-juni       24,70
-juli       26,28
-augusti    25,57
-september  23,31
-oktober    22,41
-november   22,78
-december   21,84
+juni       24,7
+juli       26,3
+augusti    25,6
+september  23,3
+oktober    22,4
+november   22,8
+december   21,8
+ 
 Average Outside Temp
-juni       15,85
-juli       20,24
-augusti    18,07
-september  16,16
-oktober    8,18
-november   3,31
-december   2,51
+juni       15,8
+juli       20,2
+augusti    18,1
+september  16,2
+oktober    8,2
+november   3,3
+december   2,5
+ 
 Average Inside Humidity
-juni       28,76
-juli       41,63
-augusti    34,60
-september  41,60
-oktober    27,27
-november   19,07
-december   15,82
+juni       29  %
+juli       42  %
+augusti    35  %
+september  42  %
+oktober    27  %
+november   19  %
+december   16  %
+ 
 Average Outside Humidity
-juni       53,21
-juli       52,99
-augusti    48,60
-september  60,43
-oktober    64,58
-november   83,49
-december   77,93
+juni       53  %
+juli       53  %
+augusti    49  %
+september  60  %
+oktober    65  %
+november   83  %
+december   78  %
+ 
+Average Inside MoldRisk
+juni       0   %
+juli       0   %
+augusti    0   %
+september  0   %
+oktober    0   %
+november   0   %
+december   0   %
+ 
+Average Outside MoldRisk
+juni       24  %
+juli       4   %
+augusti    0   %
+september  13  %
+oktober    15  %
+november   26  %
+december   15  %
+ 
+Metro Autumn
+2016-10-04
+
+Metro Winter
+2016-11-06
+
+Mold formula
+if (Temperature < 5 || Temperature > 40)
+    moldRisk = 0;
+else if (Humidity >= 80)
+    moldRisk = 100;
+else if (Humidity >= 70)
+    moldRisk = 50;
+else
+    moldRisk = 0;
