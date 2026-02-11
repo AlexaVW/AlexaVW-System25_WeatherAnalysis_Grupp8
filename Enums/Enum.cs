@@ -58,5 +58,12 @@ namespace WeatherAnalysis.Enums
             AVG_MoldRisk_LowToHigh,
             AVG_MoldRisk_HighToLow,
         }
+
+        public enum WriteColumn
+        {
+            Temp,
+            Humidity,
+            MoldRisk,
+        }
     }
 }
