@@ -1,9 +1,21 @@
-maj - Avg Inside Temp: 25,225655430711672
-juni - Avg Inside Temp: 20,999942774615615
-juli - Avg Inside Temp: 23,170212516143973
-augusti - Avg Inside Temp: 18,708917501192175
-september - Avg Inside Temp: 20,00713833755515
-oktober - Avg Inside Temp: 15,703245054653813
-november - Avg Inside Temp: 13,855496244120511
-december - Avg Inside Temp: 13,196505064709953
-januari - Avg Inside Temp: 14,775
+Outside Temp
+maj        25,31
+juni       15,85
+juli       20,24
+augusti    18,07
+september  16,16
+oktober    8,18
+november   3,31
+december   2,51
+januari    3,80
+ 
+Inside Temp
+maj        25,16
+juni       24,70
+juli       26,28
+augusti    25,57
+september  23,31
+oktober    22,41
+november   22,78
+december   21,84
+januari    21,36

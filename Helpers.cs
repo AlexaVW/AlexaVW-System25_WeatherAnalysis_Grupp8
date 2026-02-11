@@ -213,6 +213,20 @@ namespace WeatherAnalysis
             List<Reading> outsideReadings = allReadings.Where(r => r.IsInside == false).ToList();
             List<Reading> insideReadings = allReadings.Where(r => r.IsInside == true).ToList();
 
+            var groupsAllReadingsMonth = allReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM")); //Groups on Months in text format
+            var groupsOutsideReadingsMonth = outsideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM"));
+            var groupsInsideReadingsMonth = insideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM"));
+            //var groupsMonth = allReadings.GroupBy(r => r.Date.Month); ///Groups on Months in number format
+
+            List<string> avgTempPerMonth =      new List<string>();
+            List<string> avgHumidityPerMonth =  new List<string>();
+            List<string> avgMoldRiskPerMonth =  new List<string>();
+            List<string> dateMetroAutumn =      new List<string>();
+            List<string> dateMetroWinter =      new List<string>();
+
+            List<string> moldAlgorith =         new List<string>();
+
+
             //En textfil ska skapas som innehåller följande information.
             //Medeltemperatur ute och inne, per månad
             //Medelluftfuktighet inne och ute, per månad
@@ -221,28 +235,30 @@ namespace WeatherAnalysis
             //närmast)
             //Skriv också ut algoritmen för mögel
 
-            List<string> avgTempPerMonth = new List<string>();
-            List<string> avgHumidityPerMonth = new List<string>();
-            List<string> avgMoldRiskPerMonth = new List<string>();
-            List<string> dateMetroAutumn = new List<string>();
-            List<string> dateMetroWinter = new List<string>();
 
-            List<string> moldAlgorith = new List<string>();
-
-
-            var groupsMonth = allReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM")); //Groups on Months in text format
-            //var groupsMonth = allReadings.GroupBy(r => r.Date.Month); ///Groups on Months in number format
-
-            foreach (var group in groupsMonth) 
+            //Outside
+            avgTempPerMonth.Add("Outside Temp");
+            foreach (var group in groupsOutsideReadingsMonth) 
             {
-                string textRow = $"{group.Key} - Avg Inside Temp: {group.Average(r => r.Temperature)}"; //Fixa så att Månad skrivs i Text istllet för siffra
-                avgTempPerMonth.Add(textRow);
-                
+                string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}"; //Fixa så att Månad skrivs i Text istllet för siffra
+                avgTempPerMonth.Add(textRowTempPerMonth);
+
+            }
+            avgTempPerMonth.Add(" ");
+            avgTempPerMonth.Add("Inside Temp");
+            //Inside
+            foreach (var group in groupsInsideReadingsMonth)
+            {
+                string textRowTempPerMonth = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N2")}"; //Fixa så att Månad skrivs i Text istllet för siffra
+                avgTempPerMonth.Add(textRowTempPerMonth);
+
             }
 
             DataReaderWriter.WriteListToFile(avgTempPerMonth, "MonthlyFile.txt");
 
 
         }
+
+
     }
 }
