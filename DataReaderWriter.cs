@@ -28,7 +28,14 @@ namespace WeatherAnalysis
 
         public static void WriteListToFile(List<string> textRows, string fileName)
         {
-            File.WriteAllLines(path + fileName, textRows);
+            try
+            {
+                File.WriteAllLines(path + fileName, textRows);
+            }
+            catch (Exception e) 
+            {
+            
+            }
         }
     }
 }

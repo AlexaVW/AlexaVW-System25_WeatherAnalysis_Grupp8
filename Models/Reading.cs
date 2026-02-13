@@ -41,15 +41,5 @@ namespace WeatherAnalysis.Models
             
         }
 
-        public void Print()
-        {
-            Console.Write($"{Date.ToString().PadRight(25)}");
-            Console.Write($"Inside: {IsInside.ToString().PadRight(12)}");
-            Console.Write($"Temp: {Temperature.ToString().PadRight(12)}");
-            Console.Write($"Humidity: {Humidity.ToString().PadRight(12)}");
-            Console.Write($"Mold risk: {MoldRisk.ToString().PadRight(12)}");
-            Console.WriteLine(); //New line
-
-        }
     }
 }

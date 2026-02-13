@@ -220,21 +220,7 @@ namespace WeatherAnalysis
             //var groupsMonth = allReadings.GroupBy(r => r.Date.Month); ///Groups on Months in number format
 
             List<string> listToWrite =      new List<string>();
-            List<string> avgHumidityPerMonth =  new List<string>();
-            List<string> avgMoldRiskPerMonth =  new List<string>();
-            List<string> dateMetroAutumn =      new List<string>();
-            List<string> dateMetroWinter =      new List<string>();
 
-            List<string> moldAlgorith =         new List<string>();
-
-
-            //En textfil ska skapas som innehåller följande information.
-            //Medeltemperatur ute och inne, per månad
-            //Medelluftfuktighet inne och ute, per månad
-            //Medelmögelrisk inne och ute, per månad.
-            //Datum för höst och vinter 2016(om något av detta inte inträffar, ange när det var som
-            //närmast)
-            //Skriv också ut algoritmen för mögel
             string moldFormula = $@"if (Temperature < 5 || Temperature > 40)
     moldRisk = 0;
 else if (Humidity >= 80)

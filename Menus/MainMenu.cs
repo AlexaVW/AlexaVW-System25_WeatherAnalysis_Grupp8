@@ -52,7 +52,7 @@ namespace WeatherAnalysis.Menus
                         break;
                     
                     case Enums.Enum.MainMenu.Write_Report_To_File:
-                        Console.WriteLine("No method added");
+                        Console.WriteLine("Generated on start up");
                         Console.ReadKey(true);
                         break;
 

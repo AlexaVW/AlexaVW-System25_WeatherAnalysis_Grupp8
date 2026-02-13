@@ -12,8 +12,9 @@ namespace WeatherAnalysis
         static void Main(string[] args)
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("sv-SE");
-            Data.LoadData();
 
+            Data.LoadData();
+            //Write Monthly report to file
             Helpers.WriteManyFiles(Data.GetAllReadings());
             
 
