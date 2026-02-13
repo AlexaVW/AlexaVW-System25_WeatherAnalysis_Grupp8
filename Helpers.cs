@@ -230,14 +230,14 @@ else if (Humidity >= 70)
 else
     moldRisk = 0;";
 
-            listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside Temp", listToWrite, WriteColumn.Temp);
-            listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside Temp", listToWrite,  WriteColumn.Temp);
+            listToWrite = GetTextForReport(groupsInsideReadingsMonth, "Average Inside Temp", listToWrite, WriteColumn.Temp);
+            listToWrite = GetTextForReport(groupsOutsideReadingsMonth, "Average Outside Temp", listToWrite,  WriteColumn.Temp);
 
-            listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside Humidity", listToWrite, WriteColumn.Humidity);
-            listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside Humidity", listToWrite, WriteColumn.Humidity);
+            listToWrite = GetTextForReport(groupsInsideReadingsMonth, "Average Inside Humidity", listToWrite, WriteColumn.Humidity);
+            listToWrite = GetTextForReport(groupsOutsideReadingsMonth, "Average Outside Humidity", listToWrite, WriteColumn.Humidity);
 
-            listToWrite = GetText(groupsInsideReadingsMonth, "Average Inside MoldRisk", listToWrite, WriteColumn.MoldRisk);
-            listToWrite = GetText(groupsOutsideReadingsMonth, "Average Outside MoldRisk", listToWrite, WriteColumn.MoldRisk);
+            listToWrite = GetTextForReport(groupsInsideReadingsMonth, "Average Inside MoldRisk", listToWrite, WriteColumn.MoldRisk);
+            listToWrite = GetTextForReport(groupsOutsideReadingsMonth, "Average Outside MoldRisk", listToWrite, WriteColumn.MoldRisk);
 
             listToWrite.Add("Metro Autumn");
             listToWrite.Add(Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 10, new DateOnly(2016, 8, 1), new DateOnly(2017, 2, 14)).ToString());
@@ -253,7 +253,7 @@ else
             DataReaderWriter.WriteListToFile(listToWrite, "MonthlyFile.txt");
         }
 
-        public static List<string> GetText(IEnumerable<IGrouping<string, Reading>> groups, string header, List<string> list, WriteColumn selectedColumn)
+        public static List<string> GetTextForReport(IEnumerable<IGrouping<string, Reading>> groups, string header, List<string> list, WriteColumn selectedColumn)
         {
             string text = "";
             list.Add(header);
