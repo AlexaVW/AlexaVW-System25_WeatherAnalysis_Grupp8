@@ -209,7 +209,7 @@ namespace WeatherAnalysis
         }
 
 
-        public static void WriteManyFiles(List<Reading> allReadings)
+        public static void WriteReport(List<Reading> allReadings)
         {
             List<Reading> outsideReadings = allReadings.Where(r => r.IsInside == false).ToList();
             List<Reading> insideReadings = allReadings.Where(r => r.IsInside == true).ToList();

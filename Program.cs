@@ -15,7 +15,7 @@ namespace WeatherAnalysis
 
             Data.LoadData();
             //Write Monthly report to file
-            Helpers.WriteManyFiles(Data.GetAllReadings());
+            Helpers.WriteReport(Data.GetAllReadings());
             
 
             //Start MainMenu

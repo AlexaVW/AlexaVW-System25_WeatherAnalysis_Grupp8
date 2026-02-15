@@ -19,7 +19,8 @@ namespace WeatherAnalysis
             Console.WriteLine("Done");
 
             Console.Write("Parsing data... ");
-            _readings = Helpers.GetReadingsFromDataRow(dataRows) //Filter out months with only a few values
+            //Filter out months 
+            _readings = Helpers.GetReadingsFromDataRow(dataRows) 
                 .Where(r => r.Date >= new DateTime(new DateOnly(2016,6,1),TimeOnly.MinValue))
                 .Where(r => r.Date <= new DateTime(new DateOnly(2016, 12, 31), TimeOnly.MaxValue))
                 .ToList();
