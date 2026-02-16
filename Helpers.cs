@@ -127,7 +127,7 @@ namespace WeatherAnalysis
         {
             var group = readings.GroupBy(r => DateOnly.FromDateTime(r.Date));
 
-            IEnumerable<IGrouping<DateOnly, Reading>> sortedGroup = null; //Cannot be null if all Enums have a case
+            IEnumerable<IGrouping<DateOnly, Reading>> sortedGroup = null;
             switch (selectedOrderBy)
             {
                 case Enums.Enum.OrderBy.AVG_Temp_LowToHigh: 
