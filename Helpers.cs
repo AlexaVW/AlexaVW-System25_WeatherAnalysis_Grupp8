@@ -185,8 +185,8 @@ namespace WeatherAnalysis
             var groups = readings
                 .GroupBy(r => DateOnly.FromDateTime(r.Date));
 
+            //Check for 5x in a row below underTemp
             int amountInRow = 0;
-
             foreach(var group in groups)
             {
                 double temp = group.Average(r => r.Temperature);
@@ -253,37 +253,37 @@ else
             DataReaderWriter.WriteListToFile(listToWrite, "MonthlyFile.txt");
         }
 
-        public static List<string> GetTextForReport(IEnumerable<IGrouping<string, Reading>> groups, string header, List<string> list, WriteColumn selectedColumn)
+        public static List<string> GetTextForReport(IEnumerable<IGrouping<string, Reading>> groups, string header, List<string> textList, WriteColumn selectedColumn)
         {
             string text = "";
-            list.Add(header);
+            textList.Add(header);
             switch (selectedColumn)
             {
                 case WriteColumn.Temp:
                     foreach (var group in groups)
                     {
                         text = $"{group.Key.PadRight(10)} {group.Average(r => r.Temperature).ToString("N1")}";
-                        list.Add(text);
+                        textList.Add(text);
                     }
                     break;
                 case WriteColumn.Humidity:
                     foreach (var group in groups)
                     {
                         text = $"{group.Key.PadRight(10)} {group.Average(r => r.Humidity).ToString("N0").PadRight(4)}%";
-                        list.Add(text);
+                        textList.Add(text);
                     }
                     break;
                 case WriteColumn.MoldRisk:
                     foreach (var group in groups)
                     {
                         text = $"{group.Key.PadRight(10)} {group.Average(r => r.MoldRisk).ToString("N0").PadRight(4)}%";
-                        list.Add(text);
+                        textList.Add(text);
                     }
                     break;
             }
-            list.Add(" ");
+            textList.Add(" "); //Just adding spacing
 
-            return list;
+            return textList;
         }
 
 
