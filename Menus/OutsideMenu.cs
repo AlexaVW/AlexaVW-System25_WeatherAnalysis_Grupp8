@@ -81,11 +81,15 @@ namespace WeatherAnalysis.Menus
                         break;
 
                     case Enums.Enum.OutsideMenu.Meteorological_Winter:
-                        DateOnly metroDateWinter = Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 1, new DateOnly(2016, 1, 1), new DateOnly(2016, 12, 31));
+                        DateOnly metroDateWinter = Helpers.GetMetroWinter(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 0, new DateOnly(2016, 1, 1), new DateOnly(2016, 12, 31));
 
                         Console.WriteLine("Winter Metrological Date");
-                        Console.WriteLine(metroDateWinter);
-                        Console.ReadKey(true);
+                        if (metroDateWinter.Year != 0001)
+                            Console.WriteLine(metroDateWinter);
+                        else
+                            Console.WriteLine("No date found");
+
+                            Console.ReadKey(true);
                         break;
 
                     case Enums.Enum.OutsideMenu.Go_Back:

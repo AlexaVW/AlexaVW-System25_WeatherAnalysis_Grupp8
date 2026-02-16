@@ -208,6 +208,42 @@ namespace WeatherAnalysis
             return dateFound;
         }
 
+        public static DateOnly GetMetroWinter(List<Reading> readings, double targetTemp, DateOnly earliestDate, DateOnly latestDate)
+        {
+            //Filter min max dates
+            DateOnly dateFound = new DateOnly();
+            readings = readings
+                .Where(r => r.Date >= new DateTime(earliestDate, TimeOnly.MinValue))
+                .Where(r => r.Date <= new DateTime(latestDate, TimeOnly.MaxValue))
+                .ToList();
+
+            var groups = readings
+                .GroupBy(r => DateOnly.FromDateTime(r.Date));
+
+            //Check for 5x in a row below underTemp
+            int amountInRow = 0;
+            foreach (var group in groups)
+            {
+                double temp = group.Average(r => r.Temperature);
+                if (temp <= targetTemp)
+                {
+                    amountInRow++;
+                }
+                else
+                {
+                    amountInRow = 0;
+                }
+
+                if (amountInRow == 5)
+                {
+                    DateOnly dateFound2 = group.Key;
+                    return dateFound2.AddDays(-4);
+                    
+                }
+            }
+            return dateFound; // is not found
+        }
+
 
         public static void WriteReport(List<Reading> allReadings)
         {
@@ -218,6 +254,9 @@ namespace WeatherAnalysis
             var groupsOutsideReadingsMonth = outsideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM")); 
             var groupsInsideReadingsMonth = insideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM"));
             //var groupsMonth = allReadings.GroupBy(r => r.Date.Month); ///Groups on Months in number format
+
+            DateOnly metroAutumnDate = Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 10, new DateOnly(2016, 8, 1), new DateOnly(2017, 2, 14));
+            DateOnly metroWinterDate = Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 0, new DateOnly(2016, 1, 1), new DateOnly(2016, 12, 31));
 
             List<string> listToWrite =      new List<string>();
 
@@ -240,11 +279,14 @@ else
             listToWrite = GetTextForReport(groupsOutsideReadingsMonth,  "Average Outside MoldRisk", listToWrite,    WriteColumn.MoldRisk);
 
             listToWrite.Add("Metro Autumn");
-            listToWrite.Add(Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 10, new DateOnly(2016, 8, 1), new DateOnly(2017, 2, 14)).ToString());
+            listToWrite.Add(metroAutumnDate.ToString());
             listToWrite.Add("");
 
             listToWrite.Add("Metro Winter");
-            listToWrite.Add(Helpers.GetMetro(Data.GetAllReadings().Where(r => r.IsInside == false).ToList(), 1, new DateOnly(2016, 1, 1), new DateOnly(2016, 12, 31)).ToString());
+            if(metroWinterDate.Year != 0001)
+                listToWrite.Add(metroWinterDate.ToString());
+            else
+                listToWrite.Add("No date found");
             listToWrite.Add("");
             
             listToWrite.Add("Mold formula");

@@ -56,7 +56,7 @@ Metro Autumn
 2016-10-04
 
 Metro Winter
-2016-11-06
+No date found
 
 Mold formula
 if (Temperature < 5 || Temperature > 40)
