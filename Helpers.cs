@@ -214,8 +214,8 @@ namespace WeatherAnalysis
             List<Reading> outsideReadings = allReadings.Where(r => r.IsInside == false).ToList();
             List<Reading> insideReadings = allReadings.Where(r => r.IsInside == true).ToList();
 
-            var groupsAllReadingsMonth = allReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM")); //Groups on Months in text format
-            var groupsOutsideReadingsMonth = outsideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM"));
+            //Groups on month name in text form
+            var groupsOutsideReadingsMonth = outsideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM")); 
             var groupsInsideReadingsMonth = insideReadings.GroupBy(r => new DateOnly(2000, r.Date.Month, 1).ToString("MMMM"));
             //var groupsMonth = allReadings.GroupBy(r => r.Date.Month); ///Groups on Months in number format
 
