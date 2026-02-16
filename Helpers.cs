@@ -283,7 +283,7 @@ else
             listToWrite.Add("");
 
             listToWrite.Add("Metro Winter");
-            if(metroWinterDate.Year != 0001)
+            if(metroWinterDate != DateOnly.MinValue)
                 listToWrite.Add(metroWinterDate.ToString());
             else
                 listToWrite.Add("No date found");
