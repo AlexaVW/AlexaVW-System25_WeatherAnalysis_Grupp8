@@ -175,8 +175,8 @@ namespace WeatherAnalysis
 
         public static DateOnly GetMetro(List<Reading> readings, double underTemp, DateOnly earliestDate, DateOnly latestDate)
         {
-            
-            DateOnly dateFound = new DateOnly(); //Filter min max dates
+            //Filter min max dates
+            DateOnly dateFound = new DateOnly(); 
             readings = readings
                 .Where(r => r.Date >= new DateTime(earliestDate,TimeOnly.MinValue))
                 .Where(r => r.Date <= new DateTime(latestDate, TimeOnly.MaxValue))
